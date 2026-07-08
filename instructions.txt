@@ -1,0 +1,61 @@
+Users
+1. Login via LINE/ Phone number
+2. Court Booking
+- เลือกประเภทกีฬา
+- เลือกวันเวลา
+- ระบบโชว์สนามที่ว่าง
+- เลือกสนาม
+- Booking summary
+- Booking confirmation
+- Booking Detail
+- QR code check in
+3. Activity & Package
+- Event/Session/Tournament detail
+- Join event
+4. Book court + Coach
+- เลือกประเภทกีฬา
+- เลือกวันเวลา/ เลือก โค้ช
+- ระบบโชว์เวลาที่โค้ชว่าง
+-  Booking summary
+- QR code checkin
+5. Payment
+- QR prompt pay
+- Wallet กรณียกเลิกก่อน 24 ชม เงินจะกลับเช้าที่ wallet
+- Promo code
+
+
+Admin
+1. Dashboard
+- รายได้ต่อวัน
+- จำนวนการจอง
+- จำนวนสมาชิก
+- จัดการสนาม
+- กำหนดเวลาปิดเปิดสนาม
+- กำหนดราคาแต่ละช่วงเวลา
+- ตรวจสอบการจอง
+- Check - in ผู้ เล่น
+2. System setting
+- ตั้งค่าข้อมูล ติดต่อ เช่น เบอร์ โทร , Email , LINE OA
+- ตั้งค่าเวลา เปิด - ปิดให้บริการ
+- ตั้งค่าเวลา จอง ล่วงหน้าได้ สูงสุด
+- ตั้ง ค่าPolicy การคืนเงิน และการยกเลิกการจอง
+- ตั้งค่าข้อความ Terms & Conditions
+- ตั้งค่าPrivacy Policy
+3. Marketing
+- Coupon
+- Banner management
+- News management
+4. Coach management
+- ตาราง โค้ช
+- จำนวนที่โค้ชสอน
+- คำนวนค่าคอมให้โค้ช
+
+
+Coach
+1. Login เหมือน user ทั่วไป
+2. Court booking
+- ลงเวลาว่าง
+- จองสนามให้ลูกค้าพร้อมโค้ช
+- ดูการจองสนามให้ลูกค้า
+- ประวัติการทำรายการให้ลูกค้า
+- ข้อมูลโค้ช
