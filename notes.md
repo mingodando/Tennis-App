@@ -1,0 +1,20 @@
+- Django Models:
+  - `CharField` : 
+    - Used for storing short text strings.
+    - Parameters:
+      - max_length: Specifies the maximum length of the string.
+      - blank: If True, allows the field to be empty.
+      - null: If True, allows the field to store NULL values in the database.
+  - `DecimalField` :
+    - Used for storing decimal numbers with fixed precision.
+    - Parameters:
+      - max_digits: Specifies the total number of digits allowed in the number.
+      - decimal_places: Specifies the number of decimal places to store.
+      - blank: If True, allows the field to be empty.
+      - null: If True, allows the field to store NULL values in the database.
+  - `BooleanField` :
+    - Used for storing True/False values. 
+    - Parameters:
+        - default: Specifies the default value for the field (True or False).
+        - blank: If True, allows the field to be empty.
+        - null: If True, allows the field to store NULL values in the database.
