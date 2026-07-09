@@ -5,3 +5,8 @@ class Court(models.Model):
     name = models.CharField(max_length=200)
     hourly_rate = models.DecimalField(max_digits=8, decimal_places=2)
     is_active = models.BooleanField(default=True)
+
+class Booking(models.Model):
+    court = models.ForeignKey(Court, on_delete=models.CASCADE)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()

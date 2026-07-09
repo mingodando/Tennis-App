@@ -18,6 +18,20 @@
         - default: Specifies the default value for the field (True or False).
         - blank: If True, allows the field to be empty.
         - null: If True, allows the field to store NULL values in the database.
+  - `ForeignKey` :
+    - Used to create a many-to-one relationship between models.
+    - Parameters:
+      - to: Specifies the model that this field relates to.
+      - on_delete: Specifies the behavior when the related object is deleted (e.g., CASCADE, SET_NULL).
+      - blank: If True, allows the field to be empty.
+      - null: If True, allows the field to store NULL values in the database.
+  - `DateTimeField` :
+    - Used for storing date and time values.
+    - Parameters:
+      - auto_now_add: If True, sets the field to the current date and time when the object is created.
+      - auto_now: If True, updates the field to the current date and time every time the object is saved.
+      - blank: If True, allows the field to be empty.
+      - null: If True, allows the field to store NULL values in the database.
 - **Django Project Structure:**
   - A **project** is the whole site (settings, config). An **app** is one feature area (e.g. `courts`, `bookings`).
   - Folder layout: outer folder (has `manage.py`) → inner folder (same name, has `settings.py`, `urls.py`, `wsgi.py`, `asgi.py`) → apps as siblings of the inner folder.
