@@ -1,4 +1,4 @@
-- Django Models:
+**- Django Models:**
   - `CharField` : 
     - Used for storing short text strings.
     - Parameters:
@@ -18,3 +18,34 @@
         - default: Specifies the default value for the field (True or False).
         - blank: If True, allows the field to be empty.
         - null: If True, allows the field to store NULL values in the database.
+- **Django Project Structure:**
+  - A **project** is the whole site (settings, config). An **app** is one feature area (e.g. `courts`, `bookings`).
+  - Folder layout: outer folder (has `manage.py`) → inner folder (same name, has `settings.py`, `urls.py`, `wsgi.py`, `asgi.py`) → apps as siblings of the inner folder.
+  - New apps must be registered in `INSTALLED_APPS` in `settings.py`, or Django won't recognize them.
+
+- **Migrations:**
+  - `python manage.py makemigrations`: reads your models, generates a migration file (a "plan" describing table changes). Doesn't touch the database yet.
+  - `python manage.py migrate`: actually applies the migration(s) to the database, creating/updating real tables.
+  - Run both from the folder containing `manage.py`.
+
+- **Admin panel:**
+  - Register a model in `admin.py` to get a free CRUD (Create/Read/Update/Delete) interface for it:
+  - `python manage.py createsuperuser`: creates a login for `/admin/`.
+  - This is the tool the venue owner/admin will actually use to manage real data (courts, prices, availability, etc.) — not just a demo.
+
+- **Views (`views.py`):**
+  - A view is a plain Python function that takes `request` as an argument and returns a response.
+  - `Model.objects.filter(...)`: ORM query — fetches matching rows as Python objects, without writing SQL.
+  - `render(request, template_path, context_dict)`: loads an HTML template, injects data into it (via the context dict), returns it as the HTTP response.
+  - A view needs two more things before it's reachable in a browser: a **template** (the HTML file) and a **URL** (routes an address like `/courts/` to the view function).
+  - 
+- **Templates:**
+  - Live in `app_name/templates/app_name/template_name.html` (nested folder avoids naming collisions across apps).
+  - `{% %}` = logic (loops, if-statements). `{{ }}` = print a value.
+  - `{% for x in items %} ... {% endfor %}` loops just like Python.
+
+- **URLs (routing):**
+  - Two levels: app-level `urls.py` (routes within one app) and project-level `urls.py` (routes between apps).
+  - App-level: `path("", views.some_view, name="some-name")` — the `urlpatterns` variable name must be spelled exactly right, or Django throws a confusing error.
+  - Project-level: `path('prefix/', include('app_name.urls'))` hands off anything starting with that prefix to the app's own urls.py.
+  - Full request flow: browser hits a URL → project urls.py → app urls.py → view function → (queries model) → renders template → HTML sent back.
