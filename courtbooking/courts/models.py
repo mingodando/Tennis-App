@@ -137,5 +137,8 @@ class CoachAvailability(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
 
+    class Meta:
+        verbose_name_plural = "Coach Availabilities"
+
     def __str__(self):
         return f"{self.coach.name} - {self.day_of_week} ({self.start_time}-{self.end_time})"
