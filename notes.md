@@ -32,7 +32,25 @@
       - auto_now: If True, updates the field to the current date and time every time the object is saved.
       - blank: If True, allows the field to be empty.
       - null: If True, allows the field to store NULL values in the database.
-      
+  - `ImageField` :
+    - Used for storing image files.
+    - Parameters:
+      - upload_to: Specifies the directory where uploaded images will be stored.
+      - blank: If True, allows the field to be empty.
+      - null: If True, allows the field to store NULL values in the database.
+  - `IntegerField` :
+    - Used for storing integer values.
+    - Parameters:
+      - blank: If True, allows the field to be empty.
+      - null: If True, allows the field to store NULL values in the database.
+  - `OneToOneField` :
+    - Used to create a one-to-one relationship between models.
+    - Parameters:
+      - to: Specifies the model that this field relates to.
+      - on_delete: Specifies the behavior when the related object is deleted (e.g., CASCADE, SET_NULL).
+      - blank: If True, allows the field to be empty.
+      - null: If True, allows the field to store NULL values in the database.
+      - 
 **-Basic Django Concepts:**
       - "__str__" method: defines how the object is represented as a string (e.g., in the admin panel).
 - **Django Project Structure:**

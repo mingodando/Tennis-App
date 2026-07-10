@@ -48,8 +48,9 @@ class ActivityBooking(models.Model):
     participant_count = models.IntegerField(default=1)
     total_price = models.DecimalField(max_digits=8, decimal_places=2)
     status = models.CharField(max_length=20, default="pending")
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.user.username} - {self.activity.name}"
 
 class Court(models.Model):
     name = models.CharField(max_length=200)
@@ -85,3 +86,27 @@ class BookingAddOn(models.Model):
 
     def __str__(self):
         return f"{self.add_on.name} x{self.quantity}"
+
+class Payment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    booking = models.ForeignKey(Booking, on_delete=models.CASCADE, null=True, blank=True)
+    activity_booking = models.ForeignKey(ActivityBooking, on_delete=models.CASCADE, null=True, blank=True)
+    amount = models.DecimalField(max_digits=8, decimal_places=2)
+    payment_method = models.CharField(max_length=20)
+    status = models.CharField(max_length=20, default="pending")
+    transaction_id = models.CharField(max_length=20, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.amount}({self.status})"
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    member_id = models.CharField(max_length=20, unique=True)
+    phone = models.CharField(max_length=20, unique=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+    photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
+    joined_date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
