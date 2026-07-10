@@ -95,6 +95,10 @@ class BookingAddOn(models.Model):
     quantity = models.IntegerField(default=1)
     subtotal = models.DecimalField(max_digits=8, decimal_places=2)
 
+    def save(self, *args, **kwargs):
+        self.subtotal = self.add_on.price * self.quantity
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.add_on.name} x{self.quantity}"
 
