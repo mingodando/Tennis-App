@@ -13,6 +13,11 @@ CHECK_IN_STATUS = [
     ('absent', 'Absent')
 ]
 
+PAYMENT_METHOD_CHOICES = [
+    ('card', 'Card'),
+    ('promptpay', 'PromptPay'),
+]
+
 # Create your models here.
 class Sport(models.Model):
     name = models.CharField(max_length=50)
@@ -81,6 +86,7 @@ class Booking(models.Model):
     court = models.ForeignKey(Court, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
 
     def __str__(self):
         return f"{self.court.name} - {self.start_time}"
@@ -112,7 +118,7 @@ class Payment(models.Model):
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE, null=True, blank=True)
     activity_booking = models.ForeignKey(ActivityBooking, on_delete=models.CASCADE, null=True, blank=True)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
-    payment_method = models.CharField(max_length=20)
+    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
     transaction_id = models.CharField(max_length=20, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
