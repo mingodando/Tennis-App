@@ -8,6 +8,11 @@ STATUS_CHOICES = [
     ('cancelled', 'Cancelled'),
 ]
 
+CHECK_IN_STATUS = [
+    ('present', 'Present'),
+    ('absent', 'Absent')
+]
+
 # Create your models here.
 class Sport(models.Model):
     name = models.CharField(max_length=50)
@@ -141,7 +146,7 @@ class CheckIn(models.Model):
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
     checked_in_at = models.DateTimeField(auto_now_add=True)
     checked_in_by = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="present")
+    status = models.CharField(max_length=20, choices=CHECK_IN_STATUS, default="present")
 
     def __str__(self):
         return f"{self.booking} - {self.status}"
