@@ -25,8 +25,13 @@ SECRET_KEY = 'django-insecure-t@-l-8!_7@tzqb4&@a0ctej#(!=pg*j=ciqxcph%9ig7w^!qo7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1', 'localhost', '.trycloudflare.com'
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.trycloudflare.com',
+]
 
 # Application definition
 
@@ -37,8 +42,35 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.line',
+
     'courts',
 ]
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+LOGIN_REDIRECT_URL = '/courts/'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'line': {
+        'APP': {
+            'client_id': '2010664181',  # ← your real Channel ID goes here
+            'secret': '38f511cdab29fcd672ace67c1a3f90b1',  # ← your real Channel Secret goes here
+            'key': ''
+        },
+        'SCOPE': ['profile', 'openid'],
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -48,6 +80,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'courtbooking.urls'

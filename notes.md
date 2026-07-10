@@ -73,7 +73,7 @@
   - `Model.objects.filter(...)`: ORM query — fetches matching rows as Python objects, without writing SQL.
   - `render(request, template_path, context_dict)`: loads an HTML template, injects data into it (via the context dict), returns it as the HTTP response.
   - A view needs two more things before it's reachable in a browser: a **template** (the HTML file) and a **URL** (routes an address like `/courts/` to the view function).
-  - 
+
 - **Templates:**
   - Live in `app_name/templates/app_name/template_name.html` (nested folder avoids naming collisions across apps).
   - `{% %}` = logic (loops, if-statements). `{{ }}` = print a value.
