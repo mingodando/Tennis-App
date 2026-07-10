@@ -67,3 +67,12 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"{self.court.name} - {self.start_time}"
+
+class AddOn(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    sport = models.ForeignKey(Sport, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
