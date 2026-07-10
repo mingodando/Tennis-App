@@ -76,3 +76,12 @@ class AddOn(models.Model):
 
     def __str__(self):
         return self.name
+
+class BookingAddOn(models.Model):
+    booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
+    add_on = models.ForeignKey(AddOn, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    subtotal = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.add_on.name} x{self.quantity}"
