@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+STATUS_CHOICES = [
+    ('pending', 'Pending'),
+    ('confirmed', 'Confirmed'),
+    ('completed', 'Completed'),
+    ('cancelled', 'Cancelled'),
+]
+
 # Create your models here.
 class Sport(models.Model):
     name = models.CharField(max_length=50)
@@ -47,7 +54,7 @@ class ActivityBooking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     participant_count = models.IntegerField(default=1)
     total_price = models.DecimalField(max_digits=8, decimal_places=2, blank=True)
-    status = models.CharField(max_length=20, default="pending")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
 
     def save(self, *args, **kwargs):
         self.total_price = self.activity.price * self.participant_count
@@ -97,7 +104,7 @@ class Payment(models.Model):
     activity_booking = models.ForeignKey(ActivityBooking, on_delete=models.CASCADE, null=True, blank=True)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
     payment_method = models.CharField(max_length=20)
-    status = models.CharField(max_length=20, default="pending")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
     transaction_id = models.CharField(max_length=20, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -130,7 +137,7 @@ class CheckIn(models.Model):
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
     checked_in_at = models.DateTimeField(auto_now_add=True)
     checked_in_by = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
-    status = models.CharField(max_length=20, default="present")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="present")
 
     def __str__(self):
         return f"{self.booking} - {self.status}"
