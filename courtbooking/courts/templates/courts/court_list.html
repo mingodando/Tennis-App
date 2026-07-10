@@ -1,11 +1,5 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
 
 {% if user.is_authenticated %}
     <p>Logged in as: {{ user.username }}</p>
@@ -15,11 +9,11 @@
     <p>Not logged in.</p>
 {% endif %}
 
-<h1>Available Courts</h1>
+<h1 class="text-4xl font-bold text-green-600">Available Courts</h1>
 <ul>
 {% for court in courts %}
     <li>{{ court.name }} ({{ court.sport.name }}) — {{ court.hourly_rate }} THB/hr</li>
 {% endfor %}
 </ul>
-</body>
-</html>
+
+{% endblock %}

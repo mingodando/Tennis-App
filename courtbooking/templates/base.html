@@ -1,0 +1,26 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <title>Verve</title>
+</head>
+<body class="pb-16">
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around py-2">
+    <a href="{% url 'courts:court-list' %}">Home</a>
+    <a href="#">Play</a>
+    <a href="#">What's On</a>
+    <a href="#">Commons</a>
+    <a href="{% url 'courts:edit-profile' %}">Profile</a>
+</nav>
+
+</body>
+</html>
