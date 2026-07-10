@@ -110,3 +110,23 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class TimeSlot(models.Model):
+    court = models.ForeignKey(Court, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    is_blocked = models.BooleanField(default=False)
+    reason = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return f"{self.court.name} - {self.date} ({self.start_time} - {self.end_time})"
+
+class CheckIn(models.Model):
+    booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
+    checked_in_at = models.DateTimeField(auto_now_add=True)
+    checked_in_by = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.CharField(max_length=20, default="present")
+
+    def __str__(self):
+        return f"{self.booking} - {self.status}"
