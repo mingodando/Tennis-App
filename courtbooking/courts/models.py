@@ -130,3 +130,12 @@ class CheckIn(models.Model):
 
     def __str__(self):
         return f"{self.booking} - {self.status}"
+
+class CoachAvailability(models.Model):
+    coach = models.ForeignKey(Coach, on_delete=models.CASCADE)
+    day_of_week = models.CharField(max_length=10)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    def __str__(self):
+        return f"{self.coach.name} - {self.day_of_week} ({self.start_time}-{self.end_time})"

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Court, Booking, Sport, Coach, Activity, ActivityBooking, AddOn, BookingAddOn, Payment, UserProfile, TimeSlot, CheckIn
+from .models import Court, Booking, Sport, Coach, Activity, ActivityBooking, AddOn, BookingAddOn, Payment, UserProfile, TimeSlot, CheckIn, CoachAvailability
 
 # Register your models here.
 admin.site.register(Court)
@@ -14,3 +14,4 @@ admin.site.register(Payment)
 admin.site.register(UserProfile)
 admin.site.register(TimeSlot)
 admin.site.register(CheckIn)
+admin.site.register(CoachAvailability)
