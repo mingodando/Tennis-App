@@ -133,9 +133,9 @@ class UserProfile(models.Model):
 
 class TimeSlot(models.Model):
     court = models.ForeignKey(Court, on_delete=models.CASCADE)
-    date = models.DateTimeField()
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
     is_blocked = models.BooleanField(default=False)
     reason = models.CharField(max_length=200, blank=True)
 
