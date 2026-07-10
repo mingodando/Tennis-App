@@ -6,10 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Available Courts</h1>
+<h1>Available Courts</h1>
 <ul>
 {% for court in courts %}
-    <li>{{ court.name }} — {{ court.hourly_rate }} THB/hr</li>
+    <li>{{ court.name }} ({{ court.sport.name }}) — {{ court.hourly_rate }} THB/hr</li>
 {% endfor %}
 </ul>
 </body>

@@ -28,7 +28,7 @@ class Activity(models.Model):
     description = models.TextField(blank=True)
     sport = models.ForeignKey(Sport, on_delete=models.CASCADE)
     coach = models.ForeignKey(Coach, on_delete=models.CASCADE, null=True, blank=True)
-    date = models.DateTimeField()
+    date = models.DateField()
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
@@ -46,8 +46,12 @@ class ActivityBooking(models.Model):
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     participant_count = models.IntegerField(default=1)
-    total_price = models.DecimalField(max_digits=8, decimal_places=2)
+    total_price = models.DecimalField(max_digits=8, decimal_places=2, blank=True)
     status = models.CharField(max_length=20, default="pending")
+
+    def save(self, *args, **kwargs):
+        self.total_price = self.activity.price * self.participant_count
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.user.username} - {self.activity.name}"
