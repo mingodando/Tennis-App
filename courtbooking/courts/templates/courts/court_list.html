@@ -6,6 +6,15 @@
     <title>Document</title>
 </head>
 <body>
+
+{% if user.is_authenticated %}
+    <p>Logged in as: {{ user.username }}</p>
+    <p>Member ID: {{ user.userprofile.member_id }}</p>
+    <p>Phone: {{ user.userprofile.phone|default:"Not set" }}</p>
+{% else %}
+    <p>Not logged in.</p>
+{% endif %}
+
 <h1>Available Courts</h1>
 <ul>
 {% for court in courts %}
