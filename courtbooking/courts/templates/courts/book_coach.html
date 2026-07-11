@@ -1,10 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+
+<div class="p-4">
+    <h1 class="text-2xl font-bold mb-2">Book {{ coach.name }}</h1>
+    <p class="text-gray-500 mb-4">{{ coach.sport.name }} — {{ coach.hourly_rate }} THB/hr</p>
+
+    {% if error %}
+        <p class="text-red-600 mb-4">{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <h2 class="font-semibold mb-2">Add-ons (Optional) </h2>
+        {% for addon in addons %}
+            <label class="block mb-2">
+                <input type="checkbox" name="addons" value="{{ addon.id }}">
+                {{ addon.name }} — {{ addon.price }} THB
+                <input type="number" name="quantity_{{ addon.id }}" value="1" min="1" class="border rounded p-1 w-16 ml-2">
+            </label>
+        {% endfor %}
+
+        <h2 class="font-semibold mt-4 mb-2">Court & Time</h2>
+        <label class="block mb-2">
+            Court
+            <select name="court" class="border rounded p-2 w-full">
+                {% for court in courts %}
+                    <option value="{{ court.id }}">{{ court.name }}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label class="block mb-2">
+            Date
+            <input type="date" name="date" required class="border rounded p-2 w-full">
+        </label>
+
+        <label class="block mb-2">
+            Start Time
+            <input type="time" name="start_time" required class="border rounded p-2 w-full">
+        </label>
+
+        <label class="block mb-4">
+            Duration
+            <select name="duration" class="border rounded p-2 w-full">
+                <option value="60">1 hour</option>
+                <option value="120">2 hours</option>
+            </select>
+        </label>
+
+        <button type="submit" class="bg-yellow-600 text-white px-4 py-2 rounded">Confirm Booking</button>
+    </form>
+</div>
+
+{% endblock %}

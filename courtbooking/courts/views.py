@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Court, Booking
+from .models import Court, Booking, AddOn, BookingAddOn
 from django.contrib.auth.decorators import login_required
 from .forms import UserProfileForm
 from django.shortcuts import render, redirect
@@ -101,5 +101,60 @@ def register_activity(request, activity_id):
     return render(request, "courts/register_activity.html", {
         "activity": activity,
         "spots_left": spots_left,
+        "error": error,
+    })
+
+@login_required
+def book_coach(request, coach_id):
+    coach = Coach.objects.get(id=coach_id)
+    addons = AddOn.objects.filter(sport=coach.sport, is_active=True)
+    courts = Court.objects.filter(sport=coach.sport, is_active=True)
+    error = None
+
+    if request.method == "POST":
+        court_id = request.POST.get("court")
+        date = request.POST.get("date")
+        start_time_str = request.POST.get("start_time")
+        duration = int(request.POST.get("duration"))
+        selected_addon_ids = request.POST.getlist("addons")
+
+        if not selected_addon_ids:
+            error = "Please select at least one add-on."
+        else:
+            court = Court.objects.get(id=court_id)
+            naive_start = datetime.strptime(f"{date} {start_time_str}", "%Y-%m-%d %H:%M")
+            start_time = django_timezone.make_aware(naive_start)
+            end_time = start_time + timedelta(minutes=duration)
+
+            conflict = Booking.objects.filter(
+                court=court,
+                start_time__lt=end_time,
+                end_time__gt=start_time,
+            ).exclude(status="cancelled").exists()
+
+            if conflict:
+                error = "This court is already booked for the selected time."
+            else:
+                booking = Booking.objects.create(
+                    user=request.user,
+                    court=court,
+                    coach=coach,
+                    start_time=start_time,
+                    end_time=end_time,
+                )
+                for addon_id in selected_addon_ids:
+                    addon = AddOn.objects.get(id=addon_id)
+                    quantity = int(request.POST.get(f"quantity_{addon_id}", 1))
+                    BookingAddOn.objects.create(
+                        booking=booking,
+                        add_on=addon,
+                        quantity=quantity,
+                    )
+                return redirect("courts:court-list")
+
+    return render(request, "courts/book_coach.html", {
+        "coach": coach,
+        "addons": addons,
+        "courts": courts,
         "error": error,
     })

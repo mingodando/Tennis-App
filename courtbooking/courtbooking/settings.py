@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-t@-l-8!_7@tzqb4&@a0ctej#(!=pg*j=ciqxcph%9ig7w^!qo7'
+SECRET_KEY = 'DJANGO_SECRET_KEY'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -33,6 +34,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.trycloudflare.com',
 ]
 
+OMISE_PUBLIC_KEY = config('OMISE_PUBLIC_KEY')
+OMISE_SECRET_KEY = config('OMISE_SECRET_KEY')
 # Application definition
 
 INSTALLED_APPS = [
@@ -65,8 +68,8 @@ LOGIN_REDIRECT_URL = '/'
 SOCIALACCOUNT_PROVIDERS = {
     'line': {
         'APP': {
-            'client_id': '2010664181',  # ← your real Channel ID goes here
-            'secret': '38f511cdab29fcd672ace67c1a3f90b1',  # ← your real Channel Secret goes here
+            'client_id': config('LINE_CLIENT_ID'),
+            'secret': config('LINE_CLIENT_SECRET'),
             'key': ''
         },
         'SCOPE': ['profile', 'openid'],
