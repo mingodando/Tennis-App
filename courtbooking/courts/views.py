@@ -3,9 +3,10 @@ from .models import Court, Booking
 from django.contrib.auth.decorators import login_required
 from .forms import UserProfileForm
 from django.shortcuts import render, redirect
-from .models import Activity, Coach
+from .models import Activity, Coach, ActivityBooking
 from datetime import datetime, timedelta
 from django.utils import timezone as django_timezone
+from django.db import models
 
 
 
@@ -70,3 +71,35 @@ def book_court(request, court_id):
             )
             return redirect("courts:court-list")
     return render(request, "courts/book_court.html", {"court": court, "error": error})
+
+@login_required
+def register_activity(request, activity_id):
+    activity = Activity.objects.get(id=activity_id)
+    error = None
+
+    current_participants = ActivityBooking.objects.filter(
+        activity=activity
+    ).exclude(status="cancelled").aggregate(
+        total=models.Sum("participant_count")
+    )["total"] or 0
+
+    if request.method == "POST":
+        participant_count = int(request.POST.get("participant_count", 1))
+
+        if current_participants + participant_count > activity.max_participants:
+            error = "Not enough spots left for this activity."
+        else:
+            ActivityBooking.objects.create(
+                user=request.user,
+                activity=activity,
+                participant_count=participant_count,
+            )
+            return redirect("courts:activity-list")
+
+    spots_left = activity.max_participants - current_participants
+
+    return render(request, "courts/register_activity.html", {
+        "activity": activity,
+        "spots_left": spots_left,
+        "error": error,
+    })
