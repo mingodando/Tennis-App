@@ -83,6 +83,7 @@ class Court(models.Model):
         return self.name
 
 class Booking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     court = models.ForeignKey(Court, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()

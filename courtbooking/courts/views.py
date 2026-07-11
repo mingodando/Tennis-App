@@ -3,7 +3,8 @@ from .models import Court
 from django.contrib.auth.decorators import login_required
 from .forms import UserProfileForm
 from django.shortcuts import render, redirect
-from .models import Activity
+from .models import Activity, Coach
+from datetime import datetime, timedelta
 
 
 
@@ -31,3 +32,9 @@ def edit_profile(request):
 def activity_list(request):
     activities = Activity.objects.filter(is_active=True)
     return render(request, "courts/activity_list.html", {"activities": activities})
+
+
+def coach_list(request):
+    coaches = Coach.objects.filter(is_active=True)
+    return render(request, "courts/coach_list.html", {"coaches": coaches})
+

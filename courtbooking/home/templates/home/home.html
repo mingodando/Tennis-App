@@ -5,10 +5,26 @@
     <h1 class="text-2xl font-bold">Hello, {{ user.username }}</h1>
     <p class="text-gray-500">Welcome back to The Verve</p>
 
-    <div class="mt-6 bg-gray-100 rounded-lg p-4">
-        <h2 class="font-semibold mb-2">Upcoming Bookings</h2>
+<div class="mt-6 bg-gray-100 rounded-lg p-4">
+    <h2 class="font-semibold mb-2">Upcoming Bookings</h2>
+
+    {% if upcoming_bookings or upcoming_activity_bookings %}
+        <ul class="space-y-2">
+        {% for booking in upcoming_bookings %}
+            <li class="text-sm">
+                {{ booking.court.name }} — {{ booking.start_time }}
+            </li>
+        {% endfor %}
+        {% for ab in upcoming_activity_bookings %}
+            <li class="text-sm">
+                {{ ab.activity.name }} — {{ ab.activity.start_time }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
         <p class="text-gray-500 text-sm">No upcoming bookings yet.</p>
-    </div>
+    {% endif %}
+</div>
 
     <div class="mt-6">
         <h2 class="font-semibold mb-2">Play</h2>
@@ -19,7 +35,7 @@
             <a href="{% url 'courts:activity-list' %}" class="bg-blue-100 rounded-lg p-4 text-center">
                 <p class="text-sm font-medium">Book Activity</p>
             </a>
-            <a href="#" class="bg-yellow-100 rounded-lg p-4 text-center">
+            <a href="{% url 'courts:coach-list' %}" class="bg-yellow-100 rounded-lg p-4 text-center">
                 <p class="text-sm font-medium">Book Coach</p>
             </a>
         </div>
