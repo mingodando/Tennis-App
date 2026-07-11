@@ -6,4 +6,5 @@ app_name = 'courts'
 urlpatterns = [
     path("", views.court_list, name="court-list"),
     path("profile/edit/", views.edit_profile, name="edit-profile"),
+    path("activities/", views.activity_list, name="activity-list"),
 ]

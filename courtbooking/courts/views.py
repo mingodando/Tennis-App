@@ -3,6 +3,7 @@ from .models import Court
 from django.contrib.auth.decorators import login_required
 from .forms import UserProfileForm
 from django.shortcuts import render, redirect
+from .models import Activity
 
 
 
@@ -26,3 +27,7 @@ def edit_profile(request):
         form = UserProfileForm(instance=profile)
 
     return render(request, "courts/edit_profile.html", {"form": form})
+
+def activity_list(request):
+    activities = Activity.objects.filter(is_active=True)
+    return render(request, "courts/activity_list.html", {"activities": activities})
