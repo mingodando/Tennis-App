@@ -54,8 +54,9 @@ class BookingAddOnAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('court', 'start_time', 'end_time')
-    list_filter = ('court',)
+    list_display = ('user', 'court', 'start_time', 'end_time', 'status')
+    list_filter = ('court', 'status')
+    search_fields = ('user__username',)
 
 
 @admin.register(Payment)

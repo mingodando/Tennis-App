@@ -42,6 +42,7 @@ def coach_list(request):
 @login_required
 def book_court(request, court_id):
     court = Court.objects.get(id=court_id)
+    error = None
 
     if request.method == "POST":
         date = request.POST.get("date")
@@ -52,12 +53,20 @@ def book_court(request, court_id):
         start_time = django_timezone.make_aware(naive_start)
         end_time = start_time + timedelta(minutes=duration)
 
-        Booking.objects.create(
-            user=request.user,
-            court=court,
-            start_time=start_time,
-            end_time=end_time,
-        )
-        return redirect("courts:court-list")
+        conflict = Booking.objects.filter(
+            court = court,
+            start_time__lt=end_time,
+            end_time__gt=start_time,
+        ).exclude(status="cancelled").exists()
 
-    return render(request, "courts/book_court.html", {"court": court})
+        if conflict:
+            error = "This court is already beoeoked for the selected time. Please choose a different time."
+        else:
+            Booking.objects.create(
+                user=request.user,
+                court=court,
+                start_time=start_time,
+                end_time=end_time,
+            )
+            return redirect("courts:court-list")
+    return render(request, "courts/book_court.html", {"court": court, "error": error})
